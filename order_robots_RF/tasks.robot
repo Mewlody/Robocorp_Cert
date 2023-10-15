@@ -36,7 +36,6 @@ ${OUTPUT_RECEIPT_DIR}       ${OUTPUT_DIR}${/}receipt
 
 *** Tasks ***
 Suite setup
-    Cleanup temporary PDF directory
     Set up directories
 
 Order robots from RobotSpareBin Industries Inc
