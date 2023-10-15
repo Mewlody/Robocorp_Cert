@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "c:/Repos/RobotSpareBin Industries/Robocorp_Cert/order_robots_RF/."
+    ]
+}

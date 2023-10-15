@@ -17,21 +17,21 @@ Library             my_python_file.py
 
 
 *** Variables ***
-${URL}                          https://robotsparebinindustries.com/#/robot-order
-${CSV_FILE_URL}                 https://robotsparebinindustries.com/orders.csv
-${CSV_FILE_NAME}                orders.csv
-${MODAL_BTN}                    css:.btn.btn-dark
-${MODAL_CONTENT}                class:modal-content
-${ORDER_BTN}                    id:order
-${ORDER_ANOTHER_BTN}            id:order-another
-${ALERT_DANGER}                 css:.alert.alert-danger
-${ALERT_SUCCESS}                id:receipt
-${ORDER_ID}                     class:badge.badge-success
-${IMAGE_LOCATOR}                //*[@id="robot-preview-image"]
-${GLOBAL_RETRY_AMOUNT}          5x
-${GLOBAL_RETRY_INTERVAL}        1s
-${OUTPUT_TEMP_DIR}              ${OUTPUT_DIR}${/}temp
-${OUTPUT_TEMP_RECEIPT_DIR}      ${OUTPUT_TEMP_DIR}${/}receipt
+${URL}                      https://robotsparebinindustries.com/#/robot-order
+${CSV_FILE_URL}             https://robotsparebinindustries.com/orders.csv
+${CSV_FILE_NAME}            orders.csv
+${MODAL_BTN}                css:.btn.btn-dark
+${MODAL_CONTENT}            class:modal-content
+${ORDER_BTN}                id:order
+${ORDER_ANOTHER_BTN}        id:order-another
+${ALERT_DANGER}             css:.alert.alert-danger
+${ALERT_SUCCESS}            id:receipt
+${ORDER_ID}                 class:badge.badge-success
+${IMAGE_LOCATOR}            //*[@id="robot-preview-image"]
+${GLOBAL_RETRY_AMOUNT}      5x
+${GLOBAL_RETRY_INTERVAL}    1s
+${OUTPUT_TEMP_DIR}          ${OUTPUT_DIR}${/}temp
+${OUTPUT_RECEIPT_DIR}       ${OUTPUT_DIR}${/}receipt
 
 
 *** Tasks ***
@@ -56,12 +56,9 @@ Order robots from RobotSpareBin Industries Inc
 *** Keywords ***
 # Setup
 
-Cleanup temporary PDF directory
-    Remove Directory    ${OUTPUT_TEMP_DIR}    ${True}
-
 Set up directories
     Create Directory    ${OUTPUT_TEMP_DIR}
-    Create Directory    ${OUTPUT_TEMP_RECEIPT_DIR}
+    Create Directory    ${OUTPUT_RECEIPT_DIR}
 
 # Create orders
 
@@ -123,7 +120,7 @@ Store the receipt as a PDF file
     ${new_pdf}=    Create List
     ...    ${pdf}
     ...    ${image}
-    ${output_file}=    Set Variable    ${OUTPUT_TEMP_RECEIPT_DIR}${/}${id_number}.pdf
+    ${output_file}=    Set Variable    ${OUTPUT_RECEIPT_DIR}${/}${id_number}.pdf
     Add Files To Pdf    ${new_pdf}    ${output_file}
 
 Make receipts information as PDF
@@ -156,5 +153,8 @@ Change image size
 Create ZIP package from PDF files
     ${zip_file_name}=    Set Variable    ${OUTPUT_DIR}/PDFs.zip
     Archive Folder With Zip
-    ...    ${OUTPUT_TEMP_RECEIPT_DIR}
+    ...    ${OUTPUT_RECEIPT_DIR}
     ...    ${zip_file_name}
+
+Cleanup temporary PDF directory
+    Remove Directory    ${OUTPUT_TEMP_DIR}    ${True}
